@@ -1,10 +1,25 @@
-x<-read.table(file="E:/omicron-web-design/files-analysis/chemometrics/chromatograms.txt")
-#dim(x)
-#write.csv(x,file="C:/Documents and Settings/snlo/My Documents/other/DSTS-chromatography/chromatograms.csv")
+############################################################################################################
+# Potentially, plants can be used as indicators (biomarkers) of soil and water pollution. 
+# Suitably informative measurements on the plants may indicate presence of certain chemicals. 
+# The present data contain measurements on 26 plants exposed to different amounts of glyphosate, 
+# which is the active component of certain herbicides. The plants are measured by UHPLC-DAD 
+# (Ultra-High-Performance Liquid Chromatography-Diode-Array- Detection) which results in a 
+# chromatogram for each plant. This chromatogram contains 24000 readings of intensities for 
+# 24000 corresponding retention times. Thus, for each wavelength we basically have observed 
+# intensity as function of retention time. A peak at a certain retention time is supposed to
+# represent a high quantity of a specific chemical component. Retention times may "slide" a
+# little from analysis to analysis. (In fact, by this measuring technique, many chromatograms,
+# corresponding to many wavelengths, are observed for each plant, but we only use a single wavelength here).
+# The data set contains 24001 lines and 27 columns. The first column contains the 24000 retention 
+# times from line 2 and onwards. The subsequent 26 columns contain the chromatograms for the 26
+# plants, except that the first line gives the amount of glyphosate exposure for each plant. 
+# Five of these are missing and these five values are those that should be predicted. 
+############################################################################################################
 
-################################################################
-#Modelling
-################################################################
+# Read data
+x<-read.table(file="data/chromatograms.txt")
+
+# Modelling using partial least squares and principal component regression
 library(pls)
 
 glyphosate<-as.numeric(x[1,2:27])
@@ -69,83 +84,79 @@ PLS.unscaled
 PLS.scaled
 PCR.unscaled
 PCR.scaled
+# PLS.scaled with ncomp=6 seems optimal
 
-#PLS.scaled with ncomp=6 chosen and submitted
-
-################################################################
-#Plotting chromatograms for each plant
-################################################################
-
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred_gly0.png",width=1400,height=380)
+# Plotting chromatograms for each plant
+png(file="outputs/pred_gly0.png",width=1400,height=380)
 par(mfrow=c(1,3),cex=1.0) 
 plot(x[2:24001,1],x[2:24001,2],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=0")
 plot(x[2:24001,1],x[2:24001,3],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=0")
 plot(x[2:24001,1],x[2:24001,4],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=0")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred_gly1.png",width=1400,height=380)
+png(file="outputs/pred_gly1.png",width=1400,height=380)
 par(mfrow=c(1,3),cex=1.0) 
 plot(x[2:24001,1],x[2:24001,5],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=1")
 plot(x[2:24001,1],x[2:24001,6],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=1")
 plot(x[2:24001,1],x[2:24001,7],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=1")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred_gly5.png",width=1400,height=380)
+png(file="outputs/pred_gly5.png",width=1400,height=380)
 par(mfrow=c(1,3),cex=1.0) 
 plot(x[2:24001,1],x[2:24001,8],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=5")
 plot(x[2:24001,1],x[2:24001,9],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=5")
 plot(x[2:24001,1],x[2:24001,10],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=5")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred_gly10.png",width=1400,height=380)
+png(file="outputs/pred_gly10.png",width=1400,height=380)
 par(mfrow=c(1,3),cex=1.0) 
 plot(x[2:24001,1],x[2:24001,11],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=10")
 plot(x[2:24001,1],x[2:24001,12],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=10")
 plot(x[2:24001,1],x[2:24001,13],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=10")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred_gly20.png",width=1400,height=380)
+png(file="outputs/pred_gly20.png",width=1400,height=380)
 par(mfrow=c(1,3),cex=1.0) 
 plot(x[2:24001,1],x[2:24001,14],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=20")
 plot(x[2:24001,1],x[2:24001,15],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=20")
 plot(x[2:24001,1],x[2:24001,16],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=20")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred_gly30.png",width=1400,height=380)
+png(file="outputs/pred_gly30.png",width=1400,height=380)
 par(mfrow=c(1,3),cex=1.0) 
 plot(x[2:24001,1],x[2:24001,17],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=30")
 plot(x[2:24001,1],x[2:24001,18],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=30")
 plot(x[2:24001,1],x[2:24001,19],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=30")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred_gly50.png",width=1400,height=380)
+png(file="outputs/pred_gly50.png",width=1400,height=380)
 par(mfrow=c(1,3),cex=1.0) 
 plot(x[2:24001,1],x[2:24001,20],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=50")
 plot(x[2:24001,1],x[2:24001,21],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=50")
 plot(x[2:24001,1],x[2:24001,22],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate=50")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred1.png",width=650,height=500)
+png(file="outputs/pred1.png",width=650,height=500)
 par(cex=1.3) 
 plot(x[2:24001,1],x[2:24001,23],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate to be predicted")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred2.png",width=650,height=500)
+png(file="outputs/pred2.png",width=650,height=500)
 par(cex=1.3)
 plot(x[2:24001,1],x[2:24001,24],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate to be predicted")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred3.png",width=650,height=500)
+png(file="outputs/pred3.png",width=650,height=500)
 par(cex=1.3)
 plot(x[2:24001,1],x[2:24001,25],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate to be predicted")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred4.png",width=650,height=500)
+png(file="outputs/pred4.png",width=650,height=500)
 par(cex=1.3)
 plot(x[2:24001,1],x[2:24001,26],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate to be predicted")
 dev.off()
 
-png(file="E:/omicron-web-design/files-analysis/chemometrics/pred5.png",width=650,height=500)
+png(file="outputs/pred5.png",width=650,height=500)
 par(cex=1.3)
 plot(x[2:24001,1],x[2:24001,27],type="l",xlab="Retention time",ylab="Signal",main="Glyphosate to be predicted")
 dev.off()
